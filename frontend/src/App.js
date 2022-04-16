@@ -17,6 +17,8 @@ function App() {
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
   const [rating, setRating] = useState(0);
+  const [showRegister, setShowRegister] = useState(false)
+  const [showLogin, setShowLogin] = useState(false)
   const [viewport, setViewport] = useState({
     longitude: 17.071727,
     latitude: 47.040182,
@@ -158,11 +160,22 @@ function App() {
           <button className="button logout">LogOut</button>
         ) : (        
           <div className="buttons"> 
-              <button className="button login">Login</button>
-              <button className="button register">Register</button>
+              <button 
+                className="button login" 
+                onClick={()=> setShowLogin(true)}
+              >
+                Login
+              </button>
+              <button 
+                className="button register" 
+                onClick={()=> setShowRegister(true)}
+              >
+                Register
+              </button>
           </div>
         )}
-        <Register />
+        {showRegister && <Register setShowRegister={setShowRegister} />}
+        {showLogin && <Login setShowLogin={setShowLogin}/> }
         </Map>
      </div>
   );
