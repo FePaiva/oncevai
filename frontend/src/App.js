@@ -45,7 +45,7 @@ function App() {
 
   const handleAddClick = (e) => {
     console.log(e);
-    const [longitude, latitude] = e.MarkerlngLat;
+    const [longitude, latitude] = e.lngLat;
     setNewPlace({
       long: longitude,
       lat: latitude,
@@ -72,6 +72,11 @@ function App() {
       console.log(err)
     }
   };
+
+  const handleLogout = () => {
+    myStorage.removeItem("user");
+    currentUser(null);
+  }
 
   return (
     <div>  
@@ -158,7 +163,7 @@ function App() {
           </Popup>
         )}
         {currentUser ? (
-          <button className="button logout">LogOut</button>
+          <button className="button logout" onClick={handleLogout}>Logout</button>
         ) : (        
           <div className="buttons"> 
               <button 
@@ -176,7 +181,7 @@ function App() {
           </div>
         )}
         {showRegister && <Register setShowRegister={setShowRegister} />}
-        {showLogin && <Login setShowLogin={setShowLogin} myStorage={myStorage}/> }
+        {showLogin && <Login setShowLogin={setShowLogin} myStorage={myStorage} setCurrenUser={setCurrenUser} /> }
         </Map>
      </div>
   );

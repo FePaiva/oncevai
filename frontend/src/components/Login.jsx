@@ -3,7 +3,7 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import "./login.css";
 
-export default function Login({ setShowLogin, setCurrentUsername,myStorage }) {
+export default function Login({ setShowLogin, setCurrentUser, myStorage }) {
   const [error, setError] = useState(false);
   const usernameRef = useRef();
   const passwordRef = useRef();
@@ -14,9 +14,10 @@ export default function Login({ setShowLogin, setCurrentUsername,myStorage }) {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
     };
+    console.log(e)
     try {
       const res = await axios.post("/users/login", user);
-      setCurrentUsername(res.data.username);
+      setCurrentUser(res.data.username);
       myStorage.setItem('user', res.data.username);
       setShowLogin(false)
     } catch (err) {
@@ -31,17 +32,21 @@ export default function Login({ setShowLogin, setCurrentUsername,myStorage }) {
         <span>Oncevai</span>
       </div>
       <form onSubmit={handleSubmit}>
-        <input autoFocus placeholder="username" ref={usernameRef} />
-        <input
-          type="password"
-          min="6"
-          placeholder="password"
-          ref={passwordRef}
-        />
-        <button className="loginBtn" type="submit">
-          Login
-        </button>
-        {error && <span className="failure">Something went wrong!</span>}
+          <input 
+            autoFocus 
+            placeholder="username" 
+            ref={usernameRef} 
+          />
+          <input
+            type="password"
+            min="6"
+            placeholder="password"
+            ref={passwordRef}
+          />
+          <button className="loginBtn" type="submit">
+            Login
+          </button>
+          {error && <span className="failure">Something went wrong!</span>}
       </form>
       <Cancel className="loginCancel" onClick={() => setShowLogin(false)} />
     </div>
